@@ -1,6 +1,6 @@
 <template>
   <button
-    class="btn mb-0"
+    class="btn mb-0 materialButton"
     :class="getClasses(variant, color, size, fullWidth, active)"
   >
     <slot />
@@ -56,3 +56,16 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+  button{
+    background: #6f42c1;
+  }
+  router-link{
+    color: #6f42c1 !important;
+  }
+  .materialButton:hover{
+    background: #e4d4ed !important;  
+    color: #6f42c1 !important;
+  }
+</style>

@@ -7,7 +7,7 @@
     <input
       :id="id"
       :type="type"
-      class="form-control"
+      class="form-control myForm"
       :class="getClasses(size)"
       :name="name"
       :value="value"
@@ -100,3 +100,8 @@ export default {
   },
 };
 </script>
+<style scoped>
+  .myForm:focus{
+    border-color:#6f42c1 !important ;
+  }
+</style>

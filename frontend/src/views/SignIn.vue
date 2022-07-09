@@ -1,19 +1,24 @@
 <template>
-  <navbar btnBackground="bg-gradient-success" />
+
   <div
-    class="page-header align-items-start min-vh-100"
+    class="page-header align-items-middle min-vh-100"
     style="
-      background-image: url('https://images.unsplash.com/photo-1497294815431-9365093b7331?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1950&q=80');
+      
     "
   >
-    <span class="mask bg-gradient-dark opacity-6"></span>
-    <div class="container my-auto">
-      <div class="row">
-        <div class="col-lg-4 col-md-8 col-12 mx-auto">
-          <div class="card z-index-0 fadeIn3 fadeInBottom">
+    <navbar></navbar>
+    <div class="container-fluid">
+      <div class="row align-items-center">
+        <div class=" col-md-8 text-center">
+          <img src="../assets/img/signinImage.png" alt="" height="700" class="">
+        </div>
+        <div class="col-lg-3 col-md-4 ">
+                            <img src="../assets/img/logo.png" alt="" height="140" class="">
+
+          <div class="card z-index-0 fadeIn3 fadeInBottom mt-5">
             <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
               <div
-                class="bg-gradient-success shadow-success border-radius-lg py-3 pe-1"
+                class="bg-gradient-success signin-bg border-radius-lg py-3 pe-1"
               >
                 <h4 class="text-white font-weight-bolder text-center mt-2 mb-0">
                   Sign in
@@ -39,14 +44,9 @@
                     name="password"
                   />
                 </div>
-                <material-switch id="rememberMe" name="rememberMe"
-                  >Remember me</material-switch
-                >
                 <div class="text-center">
                   <material-button
-                    class="my-4 mb-2"
-                    variant="gradient"
-                    color="success"
+                    class="my-4 mb-2 materialButton text-white"
                     fullWidth
                     >Sign in</material-button
                   >
@@ -55,7 +55,7 @@
                   Don't have an account?
                   <router-link
                     :to="{ name: 'SignUp' }"
-                    class="text-success text-gradient font-weight-bold"
+                    class=" font-weight-bold"
                     >Sign up</router-link
                   >
                 </p>
@@ -70,30 +70,36 @@
 </template>
 
 <script>
-import Navbar from "@/examples/PageLayout/Navbar.vue";
 import MaterialInput from "@/components/MaterialInput.vue";
-import MaterialSwitch from "@/components/MaterialSwitch.vue";
 import MaterialButton from "@/components/MaterialButton.vue";
+import Navbar from "../examples/PageLayout/Navbar.vue"
 import { mapMutations } from "vuex";
 
 export default {
   name: "sign-in",
   components: {
-    Navbar,
     MaterialInput,
-    MaterialSwitch,
     MaterialButton,
+    Navbar
   },
   beforeMount() {
-    this.toggleEveryDisplay();
-    this.toggleHideConfig();
+  
   },
   beforeUnmount() {
-    this.toggleEveryDisplay();
-    this.toggleHideConfig();
+  
   },
   methods: {
     ...mapMutations(["toggleEveryDisplay", "toggleHideConfig"]),
   },
 };
 </script>
+
+<style scoped>
+  .signin-bg{
+    background: #6f42c1;
+  }
+  .materialButton:hover{
+    background: #e4d4ed !important;  
+    color: #6f42c1 !important;
+  }
+</style>

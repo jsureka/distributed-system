@@ -1,33 +1,24 @@
 <template>
   <div class="bg-white">
-    <div class="container top-0 position-sticky z-index-sticky">
-      <div class="row">
-        <div class="col-12">
-          <navbar
-            isBlur="blur my-3 py-2 mt-4 start-0 end-0 mx-4 shadow blur border-radius-lg"
-            btnBackground="bg-gradient-success"
-            v-bind:darkMode="true"
-          />
-        </div>
-      </div>
-    </div>
     <main class="mt-0 main-content">
       <section>
         <div class="page-header min-vh-100">
+          <navbar></navbar>
           <div class="container">
             <div class="row">
               <div
                 class="col-6 d-lg-flex d-none h-100 my-auto pe-0 ps-0 position-absolute top-0 start-0 text-center justify-content-center flex-column"
               >
-                <div
+              <img src="../assets/img/signupImage.webp" alt="">
+                <!-- <div
                   class="position-relative h-100 m-3 px-7 border-radius-lg d-flex flex-column justify-content-center"
                   :style="{
                     backgroundImage:
                       'url(' +
-                      require('@/assets/img/illustrations/illustration-signin.jpg') +
+                      require('@/assets/img/signupImage.webp') +
                       ')',
                   }"
-                ></div>
+                ></div> -->
               </div>
               <div
                 class="col-xl-4 col-lg-5 col-md-7 d-flex flex-column ms-auto me-auto ms-lg-auto me-lg-5"
@@ -113,20 +104,20 @@
 </template>
 
 <script>
-import Navbar from "@/examples/PageLayout/Navbar.vue";
 import MaterialInput from "@/components/MaterialInput.vue";
 import MaterialCheckbox from "@/components/MaterialCheckbox.vue";
 import MaterialButton from "@/components/MaterialButton.vue";
+import Navbar from '../examples/PageLayout/Navbar.vue'
 const body = document.getElementsByTagName("body")[0];
 import { mapMutations } from "vuex";
 
 export default {
   name: "sign-up",
   components: {
-    Navbar,
     MaterialInput,
     MaterialCheckbox,
     MaterialButton,
+    Navbar
   },
   beforeMount() {
     this.toggleEveryDisplay();

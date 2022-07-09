@@ -2,7 +2,7 @@
   <!-- Navbar -->
   <nav
     class="top-0 navbar navbar-expand-lg position-absolute z-index-3"
-    :class="isBlur ? isBlur : 'shadow-none my-2 navbar-transparent w-100'"
+    :class="isBlur ? isBlur : 'shadow-none my-2 w-100'"
   >
     <div class="container px-0">
 
@@ -21,7 +21,8 @@
           <span class="navbar-toggler-bar bar3"></span>
         </span>
       </button>
-      <div class="collapse navbar-collapse" id="navigation">
+      <div class="collapse navbar-collapse shadow-sm rounded-2 bg-light p-1" id="navigation">
+         <img src="../../assets/img/logo.png" alt="" class="" width="100">
         <ul class="navbar-nav mx-auto">
           <li class="nav-item">
             <router-link
@@ -32,7 +33,7 @@
               <i
                 class="fa fa-chart-pie opacity-6 me-1"
                 aria-hidden="true"
-                :class="isBlur ? 'text-dark' : 'text-white'"
+               
               ></i>
               Dashboard
             </router-link>
@@ -42,7 +43,6 @@
               <i
                 class="fa fa-user opacity-6 me-1"
                 aria-hidden="true"
-                :class="isBlur ? 'text-dark' : 'text-white'"
               ></i>
               Profile
             </router-link>
@@ -52,7 +52,6 @@
               <i
                 class="fas fa-user-circle opacity-6 me-1"
                 aria-hidden="true"
-                :class="isBlur ? 'text-dark' : 'text-white'"
               ></i>
               Sign Up
             </router-link>
@@ -62,7 +61,6 @@
               <i
                 class="fas fa-key opacity-6 me-1"
                 aria-hidden="true"
-                :class="isBlur ? 'text-dark' : 'text-white'"
               ></i>
               Sign In
             </router-link>
@@ -103,3 +101,9 @@ export default {
   },
 };
 </script>
+<style scoped>
+.bg-light{
+  background: rgb(
+    255, 255, 255, 0.4) !important;
+}
+</style>

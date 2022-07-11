@@ -28,10 +28,10 @@
             <router-link
               class="nav-link d-flex align-items-center me-2 active"
               aria-current="page"
-              to="/"
+              to="/dashboard"
             >
               <i
-                class="fa fa-chart-pie opacity-6 me-1"
+                class="fa fa-chart-pie opacity-6 me-1 fs-6"
                 aria-hidden="true"
                
               ></i>
@@ -41,7 +41,7 @@
           <li class="nav-item">
             <router-link class="nav-link me-2" to="/">
               <i
-                class="fa fa-user opacity-6 me-1"
+                class="fa fa-user opacity-6 me-1 fs-6"
                 aria-hidden="true"
               ></i>
               Profile
@@ -50,7 +50,7 @@
           <li class="nav-item">
             <router-link class="nav-link me-2" to="/sign-up">
               <i
-                class="fas fa-user-circle opacity-6 me-1"
+                class="fas fa-user-circle opacity-6 me-1 fs-6"
                 aria-hidden="true"
               ></i>
               Sign Up
@@ -59,7 +59,7 @@
           <li class="nav-item">
             <router-link class="nav-link me-2" to="/">
               <i
-                class="fas fa-key opacity-6 me-1"
+                class="fas fa-key opacity-6 me-1 fs-6"
                 aria-hidden="true"
               ></i>
               Sign In

@@ -34,8 +34,8 @@ const story = require("./routes/storyRoute");
 
 
 app.use("/api/v1", user);
-app.use("/api/v1", post);
-app.use("/api/v1", story);
+// app.use("/api/v1", post);
+// app.use("/api/v1", story);
 
 
 

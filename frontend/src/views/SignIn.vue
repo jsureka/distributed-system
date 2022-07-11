@@ -10,7 +10,7 @@
     <div class="container-fluid">
       <div class="row align-items-center">
         <div class=" col-md-8 text-center">
-          <img src="../assets/img/signinImage.png" alt="" height="700" class="">
+          <img src="../assets/img/signinImage.png" alt="" width=" 700" class="">
         </div>
         <div class="col-lg-3 col-md-4 ">
                             <img src="../assets/img/logo.png" alt="" height="140" class="">

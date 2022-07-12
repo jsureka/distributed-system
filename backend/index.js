@@ -29,13 +29,13 @@ app.use(function (req, res, next) {
 });
 
 const user = require("./routes/userRoute");
-const post = require("./routes/postRoute");
+const status = require("./routes/statusRoute");
 const story = require("./routes/storyRoute");
 
 
-app.use("/api/v1", user);
-// app.use("/api/v1", post);
-// app.use("/api/v1", story);
+app.use("/api", user);
+ app.use("/api", status);
+ app.use("/api", story);
 
 
 

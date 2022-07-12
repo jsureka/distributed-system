@@ -1,11 +1,11 @@
 const express = require("express");
 const {
-createStory
-} = require("../controllers/storyController");
+ createStatus
+} = require("../controllers/statusController");
 const { isAuthenticatedUser } = require("../middleware/auth");
 
 const router = express.Router();
 
-router.route("/status").post(createStory);
+router.route("/status").post(createStatus);
 
 module.exports = router;

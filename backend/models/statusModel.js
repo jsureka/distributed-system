@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const postSchema = new mongoose.Schema({
+const statusSchema = new mongoose.Schema({
     description: {
       type: String,
       required: [true, "Please Enter Post Description"],
@@ -26,4 +26,4 @@ const postSchema = new mongoose.Schema({
     ]
   });
 
-  module.exports = mongoose.model("Post", postSchema);
+  module.exports = mongoose.model("Status", statusSchema);

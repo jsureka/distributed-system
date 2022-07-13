@@ -11,18 +11,6 @@ const userSchema = new mongoose.Schema({
     maxLength: [30, "Name cannot exceed 30 characters"],
     minLength: [4, "Name should have more than 4 characters"],
   },
-  address: {
-
-    location: {
-      type: String
-    },
-    lat: {
-      type: Number,
-    },
-    lng: {
-      type: Number,
-    },
-  },
   email: {
     type: String,
     required: [true, "Please Enter Your Email"],
@@ -35,17 +23,12 @@ const userSchema = new mongoose.Schema({
     minLength: [8, "Password should be greater than 8 characters"],
     select: false,
   },
-  role: {
-    type: String,
-    default: "user",
-  },
-  phone: {
-    type: String,
-    unique: [true, "Phone Number Already Exists"],
-  },
   createdAt: {
     type: Date,
     default: Date.now,
+  },
+  image : {
+    type: String,   
   },
 
   resetPasswordToken: String,

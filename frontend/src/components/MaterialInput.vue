@@ -14,6 +14,7 @@
       :placeholder="placeholder"
       :isRequired="isRequired"
       :disabled="disabled"
+      :v-model="vModel"
     />
   </div>
 </template>
@@ -71,6 +72,10 @@ export default {
     isRequired: {
       type: Boolean,
       default: false,
+    },
+    vModel: {
+      type: String,
+      default: "",
     },
   },
   mounted() {

@@ -12,6 +12,7 @@
     "@popperjs/core": "2.10.2",
     "@tailwindcss/postcss7-compat": "^2.0.2",
     "autoprefixer": "^9",
+    "axios": "^0.27.2",
     "chart.js": "3.6.0",
     "core-js": "3.6.5",
     "postcss": "^7",

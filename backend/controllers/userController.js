@@ -2,29 +2,31 @@ const ErrorHander = require("../utils/errorhander");
 const catchAsyncErrors = require("../middleware/catchAsyncErrors");
 const User = require("../models/userModel");
 const sendToken = require("../utils/jwtToken");
-var Minio = require('minio')
+var Minio = require("minio");
 
 // Register a User
 exports.registerUser = catchAsyncErrors(async (req, res, next) => {
-  const { name, email, password, phone, address } = req.body;
-  console.log(name);
-  var minioClient = new Minio.Client({
-    endPoint: 'http://127.0.0.1:46217',
-    port: 9000,
-    useSSL: true,
-    accessKey: 'Q3AM3UQ867SPQQA43P2F',
-    secretKey: 'zuf+tfteSlswRu7BJ86wekitnifILbZam1KYY3TG'
-});
+  console.log(req.body)
+  const {name, email, password} = req.body
+  // var minioClient = new Minio.Client({
+  //   endPoint: "play.min.io",
+  //   port: 9000,
+  //   useSSL: true,
+  //   accessKey: "Q3AM3UQ867SPQQA43P2F",
+  //   secretKey: "zuf+tfteSlswRu7BJ86wekitnifILbZam1KYY3TG",
+  // });
+  // minioClient.putObject(
+  //   "avatars",
+  //   "firstImage",
+  //   req.body.image,
+  //   function (err, etag) {
+  //     if (err) return console.log(err);
+  //     console.log("File uploaded successfully.");
+  //   }
+  // );
+  const user = await User.create({name, email, password});
 
-  const user = await User.create({
-    name,
-    email,
-    password,
-    phone,
-    address,
-  });
-
-  sendToken(user, 201, res);
+  sendToken(name, 201, res);
 });
 
 // Login User
@@ -57,8 +59,6 @@ exports.logout = catchAsyncErrors(async (req, res, next) => {
   });
 });
 
-
-
 // Get User Detail
 exports.getUserDetails = catchAsyncErrors(async (req, res, next) => {
   const user = await User.findById(req.user.id);
@@ -76,41 +76,5 @@ exports.getSpecificUserDetails = catchAsyncErrors(async (req, res, next) => {
   res.status(200).json({
     success: true,
     user,
-  });
-});
-
-
-
-
-// // Get all users(admin)
-// exports.getAllUser = catchAsyncErrors(async (req, res, next) => {
-//   const users = await User.find();
-
-// Get all users(admin)
-exports.getAllUser = catchAsyncErrors(async (req, res, next) => {
-  const users = await User.find();
-
-  res.status(200).json({
-    success: true,
-    users,
-  });
-});
-
-
-// Delete User --Admin
-exports.deleteUser = catchAsyncErrors(async (req, res, next) => {
-  const user = await User.findById(req.params.id);
-
-  if (!user) {
-    return next(
-      new ErrorHander(`User does not exist with Id: ${req.params.id}`, 400)
-    );
-  }
-
-  await user.remove();
-
-  res.status(200).json({
-    success: true,
-    message: "User Deleted Successfully",
   });
 });

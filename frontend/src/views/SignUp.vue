@@ -9,7 +9,7 @@
               <div
                 class="col-6 d-lg-flex d-none h-100 my-auto pe-0 ps-0 position-absolute top-0 start-0 text-center justify-content-center flex-column"
               >
-              <img src="../assets/img/signupImage.webp" alt="">
+                <img src="../assets/img/signupImage.webp" alt="" />
                 <!-- <div
                   class="position-relative h-100 m-3 px-7 border-radius-lg d-flex flex-column justify-content-center"
                   :style="{
@@ -31,50 +31,53 @@
                     </p>
                   </div>
                   <div class="card-body">
-                    <form role="form">
-                      <div class="mb-3">
-                        <material-input
+                    <form role="form" @submit.prevent="submit">
+                      <div class="mb-3 border-secondary border-1">
+                        <input
+                          class="form-control form-control-lg"
                           id="name"
                           type="text"
                           label="Name"
-                          name="name"
-                          size="lg"
+                          v-model="userName"
+                          placeholder=" Name"
                         />
                       </div>
-                      <div class="mb-3">
-                        <material-input
+                      <div class="mb-3 border-secondary border-1">
+                        <input
+                          class="form-control form-control-lg"
                           id="email"
                           type="email"
+                          v-model="userEmail"
                           label="Email"
                           name="email"
                           size="lg"
                         />
                       </div>
-                      <div class="mb-3">
-                        <material-input
+                      <div class="mb-3 border-secondary border-1">
+                        <input
+                          class="form-control form-control-lg"
                           id="password"
                           type="password"
+                          v-model="userPassword"
                           label="Password"
                           name="password"
                           size="lg"
                         />
                       </div>
-                      <material-checkbox
-                        id="flexCheckDefault"
-                        class="font-weight-light"
-                        checked
-                      >
-                        I agree the
-                        <a
-                          href="../../../pages/privacy.html"
-                          class="text-dark font-weight-bolder"
-                          >Terms and Conditions</a
-                        >
-                      </material-checkbox>
+                      <div class="mb-3 border-secondary border-1">
+                        <input
+                          class="form-control form-control-lg"
+                          id="file"
+                          v-on:change="onFileSelected"
+                          type="file"
+                          size="lg"
+                        />
+                      </div>
                       <div class="text-center">
                         <material-button
                           class="mt-4"
                           variant="gradient"
+                          type="submit"
                           color="success"
                           fullWidth
                           size="lg"
@@ -104,33 +107,59 @@
 </template>
 
 <script>
-import MaterialInput from "@/components/MaterialInput.vue";
-import MaterialCheckbox from "@/components/MaterialCheckbox.vue";
 import MaterialButton from "@/components/MaterialButton.vue";
-import Navbar from '../examples/PageLayout/Navbar.vue'
-const body = document.getElementsByTagName("body")[0];
+import Navbar from "../examples/PageLayout/Navbar.vue";
 import { mapMutations } from "vuex";
-
+import axios from "axios";
 export default {
   name: "sign-up",
+  data: () => ({
+    userName: "",
+    userEmail: "",
+    userPassword: "",
+    userImage: "",
+  }),
   components: {
-    MaterialInput,
-    MaterialCheckbox,
     MaterialButton,
-    Navbar
-  },
-  beforeMount() {
-    this.toggleEveryDisplay();
-    this.toggleHideConfig();
-    body.classList.remove("bg-gray-100");
-  },
-  beforeUnmount() {
-    this.toggleEveryDisplay();
-    this.toggleHideConfig();
-    body.classList.add("bg-gray-100");
+    Navbar,
   },
   methods: {
     ...mapMutations(["toggleEveryDisplay", "toggleHideConfig"]),
+    submit() {
+      // const userData = {
+      //   name : this.userName,
+      //   email : this.userEmail,
+      //   password : this.userPassword,
+      //   image : this.userImage
+      // }
+      let myForm = new FormData();
+      myForm.set("name", this.userName);
+      myForm.set("email", this.userEmail);
+      myForm.set("password", this.userPassword);
+      myForm.set("image", this.userImage);
+      const headers = {
+        "Content-Type": "application/x-www-form-urlencoded"
+      };
+      console.log(myForm.get("name"));
+      axios.post("http://localhost:5000/api/register", myForm, {headers}).then((res) => {
+        console.log(res);
+      });
+    },
+    onFileSelected(event) {
+      const reader = new FileReader();
+
+      reader.onload = () => {
+        if (reader.readyState === 2) {
+          this.userImage = reader.result;
+        }
+      };
+      reader.readAsDataURL(event.target.files[0]);
+    },
   },
 };
 </script>
+<style scoped>
+.myForm:focus {
+  border-color: #6f42c1 !important ;
+}
+</style>

@@ -6,27 +6,32 @@ var Minio = require("minio");
 
 // Register a User
 exports.registerUser = catchAsyncErrors(async (req, res, next) => {
-  console.log(req.body)
+  console.log(req.body.name)
   const {name, email, password} = req.body
-  // var minioClient = new Minio.Client({
-  //   endPoint: "play.min.io",
-  //   port: 9000,
-  //   useSSL: true,
-  //   accessKey: "Q3AM3UQ867SPQQA43P2F",
-  //   secretKey: "zuf+tfteSlswRu7BJ86wekitnifILbZam1KYY3TG",
-  // });
-  // minioClient.putObject(
-  //   "avatars",
-  //   "firstImage",
-  //   req.body.image,
-  //   function (err, etag) {
-  //     if (err) return console.log(err);
-  //     console.log("File uploaded successfully.");
-  //   }
-  // );
+  var minioClient = new Minio.Client({
+    endPoint: "127.0.0.1",
+    port: 9000,
+    useSSL: false,
+    accessKey: "jsureka",
+    secretKey: "minioadmin",
+  });
+  const metadata = {
+    'Content-type': 'image/jpeg',
+  };
+  const result =  minioClient.putObject(
+    "avatars",
+    req.body.name,
+    req.body.image,
+    metadata,
+    function (err, etag) {
+      if (err) return console.log(err);
+      console.log(etag);
+    }
+  );
   const user = await User.create({name, email, password});
 
-  sendToken(name, 201, res);
+  sendToken(user, 201, res);
+  
 });
 
 // Login User
@@ -44,6 +49,29 @@ exports.loginUser = catchAsyncErrors(async (req, res, next) => {
     return next(new ErrorHander("Invalid email or password", 401));
   }
   sendToken(user, 200, res);
+});
+
+// Logout User
+exports.logout = catchAsyncErrors(async (req, res, next) => {
+  res.cookie("token", null, {
+    expires: new Date(Date.now()),
+    httpOnly: true,
+  });
+
+  res.status(200).json({
+    success: true,
+    message: "Logged Out",
+  });
+});
+
+// Get Users
+exports.getUser = catchAsyncErrors(async (req, res, next) => {
+  const user = await User.find();
+
+  res.status(200).json({
+    success: true,
+    user,
+  });
 });
 
 // Logout User

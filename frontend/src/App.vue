@@ -2,13 +2,6 @@
   <main
     class="main-content"
   >
-    <!-- nav -->
-    <!-- <navbar
-      :class="[isNavFixed ? navbarFixed : '', isAbsolute ? absolute : '']"
-      :color="isAbsolute ? 'text-white opacity-8' : ''"
-      :minNav="navbarMinimize"
-      v-if="showNavbar"
-    /> -->
     <router-view />
   </main>
 </template>

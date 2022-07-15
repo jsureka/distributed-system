@@ -48,7 +48,7 @@
                           id="email"
                           type="email"
                           v-model="userEmail"
-                          label="Email"
+                          placeholder="Email"
                           name="email"
                           size="lg"
                         />
@@ -59,7 +59,7 @@
                           id="password"
                           type="password"
                           v-model="userPassword"
-                          label="Password"
+                          placeholder="Password"
                           name="password"
                           size="lg"
                         />

@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const statusSchema = new mongoose.Schema({
-    description: {
+    status: {
       type: String,
       required: [true, "Please Enter Post Description"],
     },
@@ -9,21 +9,12 @@ const statusSchema = new mongoose.Schema({
       type: Date,
       default: Date.now,
     },
-    comments : [
-        {
-            comment: {
-                type: String,
-                required: [true, "Please Enter a Comment"],
-              },
-              createdAt: {
-                type: Date,
-                default: Date.now,
-              },
-              username: {
-                type: String
-              }
-        }
-    ]
+    username:{
+      type:String
+    },
+    user_id : {
+      type : mongoose.Schema.ObjectId
+    }
   });
 
   module.exports = mongoose.model("Status", statusSchema);

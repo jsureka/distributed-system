@@ -6,7 +6,6 @@
       :style="{ 'background-image': `url(${previewImage})` }"
       @click="selectImage">
     </div>
- 
     <input
       ref="fileInput"
       type="file"

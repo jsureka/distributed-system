@@ -25,7 +25,7 @@
         data-bs-toggle="modal"
         data-bs-target="#postModal"
       >
-        Create a Post
+        Post a Status
       </button>
       <button
         class="btn btn-info m-1"
@@ -36,27 +36,18 @@
         Create a Story
       </button>
     </div>
-    <div class="row">
+
+    <div class="row" v-for="(status, index) in statuses" :key="index">
       <div class="col-md-3"></div>
       <div class="col-md-6">
         <div class="p-3 bg-white mt-5 rounded-t-2xl shadow-lg">
           <div class="flex items-center space-x-2">
-            <img
-              class="rounded-full icon"
-              :src="image"
-              width="40"
-              height="40"
-            />
             <div>
-              <p class="font-medium">{{ name }}</p>
-              <p v-if="timestamp" class="text-xs text-gray-400">
-                {{ new Date(timestamp?.toDate()).toLocaleString() }}
-              </p>
-              <p v-else class="text-xs text-gray-400">Loading</p>
+              <p class="font-medium">{{ status.username }}</p>
             </div>
           </div>
 
-          <p class="pt-4">{{ message }}</p>
+          <p class="pt-4">{{ status.status }}</p>
         </div>
         <div v-if="postImage" class="relative h-56 md:h-96 bg-white">
           <img :src="postImage" class="object-cover w-full" loading="lazy" />
@@ -67,26 +58,25 @@
           class="flex justify-between items-center rounded-b-2xl bg-white shadow-md text-gray-400 border-t"
         >
           <div class="inputIcon p-3 rounded-none rounded-bl-2xl">
-            <i class=" fa fa-thumbs-up"></i>
+            <i class="fa fa-thumbs-up"></i>
             <p class="text-xs sm:text-base d-inline p-2">Like</p>
           </div>
 
           <div class="inputIcon p-3 rounded-none">
-            <i class=" fa fa-comment"></i>
+            <i class="fa fa-comment"></i>
             <p class="text-xs sm:text-base d-inline p-2">Comment</p>
           </div>
 
           <div class="inputIcon p-3 rounded-none rounded-br-2xl">
-            <i class=" fa fa-share "></i>
+            <i class="fa fa-share"></i>
             <p class="text-xs sm:text-base d-inline p-2">Share</p>
           </div>
         </div>
       </div>
       <div class="col-md-3"></div>
     </div>
-    
 
-    <!--Post Modal -->
+    <!--Status Modal -->
     <div
       class="modal fade"
       id="postModal"
@@ -97,7 +87,7 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Create a Post</h5>
+            <h5 class="modal-title" id="exampleModalLabel">Post a Status</h5>
             <button
               type="button"
               class="btn-close"
@@ -106,11 +96,12 @@
             ></button>
           </div>
           <div class="modal-body">
-            <material-input
+            <input
+              class="form-control border-1 border-success"
               id="text"
-              placeholder=""
-              label="What's on your mind?"
+              placeholder="What's on your mind?"
               name="post"
+              v-model="status"
             />
           </div>
           <div class="modal-footer">
@@ -121,7 +112,14 @@
             >
               Close
             </button>
-            <button type="button" class="btn btn-success">Post</button>
+            <button
+              type="button"
+              class="btn btn-success"
+              data-bs-dismiss="modal"
+              @click="statusSubmit"
+            >
+              Post
+            </button>
           </div>
         </div>
       </div>
@@ -147,7 +145,7 @@
             ></button>
           </div>
           <div class="modal-body">
-            <file-preview></file-preview>
+            <file-preview @input="onFileInput"></file-preview>
           </div>
           <div class="modal-footer">
             <button
@@ -157,7 +155,7 @@
             >
               Close
             </button>
-            <button type="button" class="btn btn-success">Post</button>
+            <button type="button" class="btn btn-success" data-bs-dismiss="modal" @click="onStorySubmit">Post</button>
           </div>
         </div>
       </div>
@@ -196,15 +194,62 @@
 <script>
 import Navbar from "../examples/PageLayout/Navbar.vue";
 import Stories from "./Stories.vue";
-import MaterialInput from "@/components/MaterialInput.vue";
 import FilePreview from "./FilePreview";
-
+import axios from "axios";
 export default {
+  data: () => ({
+    status: "",
+    user: {},
+    statuses : {},
+    inputImage : ""
+  }),
   components: {
     Navbar,
     Stories,
-    MaterialInput,
     FilePreview,
+  },
+  methods: {
+    statusSubmit() {
+      const myForm = new FormData();
+      myForm.set("user_id", this.user._id);
+      myForm.set("username", this.user.name);
+      myForm.set("status", this.status);
+      const headers = {
+        "Content-Type": "application/x-www-form-urlencoded",
+      };
+      axios
+        .post("http://localhost:5000/api/status", myForm, { headers })
+        .then((res) => {
+          console.log(res);
+          this.$forceUpdate();
+        });
+    },
+    onFileInput(data){
+      this.inputImage = data;
+    },
+    onStorySubmit(){
+let myForm = new FormData();
+      myForm.set("username", this.userName);
+      myForm.set("image", this.inputImage);
+      myForm.set("user_id", this.user._id);
+      const headers = {
+        "Content-Type": "application/x-www-form-urlencoded"
+      };
+      console.log(myForm.get("name"));
+      axios.post("http://localhost:5000/api/story", myForm, {headers}).then((res) => {
+        console.log(res);
+      });
+    }
+  },
+  mounted() {
+    axios.get("http://localhost:5000/api/me").then((res) => {
+      this.user = res.data.user;
+      console.log(this.user);
+    });
+    axios.get("http://localhost:5000/api/status").then((res) => {
+      this.statuses = res.data.status;
+      console.log(this.statuses);
+    });
   },
 };
 </script>

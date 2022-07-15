@@ -1,11 +1,13 @@
 const express = require("express");
 const {
-createStory
+createStory, getStory
 } = require("../controllers/storyController");
 const { isAuthenticatedUser } = require("../middleware/auth");
 
 const router = express.Router();
 
-router.route("/status").post(createStory);
+router.route("/story").post(createStory);
+
+router.route("/story").get(getStory);
 
 module.exports = router;

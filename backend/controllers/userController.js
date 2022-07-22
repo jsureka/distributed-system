@@ -4,7 +4,9 @@ const User = require("../models/userModel");
 const sendToken = require("../utils/jwtToken");
 var Minio = require("minio");
 const crypto = require("crypto");
-
+const fs = require('fs')
+const util = require('util');
+const unlinkFile = util.promisify(fs.unlink);
 // Register a User
 exports.registerUser = catchAsyncErrors(async (req, res, next) => {
   console.log(req.file);
@@ -16,8 +18,8 @@ exports.registerUser = catchAsyncErrors(async (req, res, next) => {
     endPoint: "127.0.0.1",
     port: 9000,
     useSSL: false,
-    accessKey: "E2AXVtakNWwleCH5",
-    secretKey: "5F7xYH8XpMLv17dCr5d3UzTcFYP4l2Hm",
+    accessKey: process.env.MINIO_ACCESS_KEY,
+    secretKey: process.env.MINIO_SECRET_KEY,
   });
   const metadata = {
     "Content-type": "image/jpg",
@@ -32,7 +34,7 @@ exports.registerUser = catchAsyncErrors(async (req, res, next) => {
       console.log(etag);
     }
   );
-
+  await unlinkFile(req.file.path);
   sendToken(user, 201, res);
 });
 

@@ -228,13 +228,15 @@ export default {
       myForm.set("username", this.user.name);
       myForm.set("status", this.status);
       const headers = {
-        "Content-Type": "application/x-www-form-urlencoded",
+        "Content-Type": "multipart/form-data",
       };
       axios
         .post("http://localhost:5000/api/status", myForm, { headers })
         .then((res) => {
           console.log(res);
-          this.$forceUpdate();
+          axios.get("http://localhost:5000/api /status").then((res) => {
+            this.statuses = res.data.status;
+          });
         });
     },
     onFileSelected(event) {
@@ -270,8 +272,6 @@ export default {
     });
     axios.get("http://localhost:5000/api/status").then((res) => {
       this.statuses = res.data.status;
-      this.statuses.reverse();
-      console.log(this.statuses);
     });
   },
 };

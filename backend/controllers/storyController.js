@@ -3,6 +3,10 @@ const catchAsyncErrors = require("../middleware/catchAsyncErrors");
 const User = require("../models/userModel");
 const crypto = require("crypto");
 var Minio = require("minio");
+const fs = require('fs')
+const util = require('util');
+const unlinkFile = util.promisify(fs.unlink);
+
 
 exports.createStory = catchAsyncErrors(async (req, res, next) => {
     var story = crypto.randomUUID();
@@ -13,8 +17,8 @@ exports.createStory = catchAsyncErrors(async (req, res, next) => {
       endPoint: "127.0.0.1",
       port: 9000,
       useSSL: false,
-      accessKey: "xcn392T2HkviIPiQ",
-      secretKey: "6BKSAkzwI4fN5aMMBt6W9sIWXMdPxgQs",
+      accessKey: process.env.MINIO_ACCESS_KEY,
+      secretKey: process.env.MINIO_SECRET_KEY,
     });
     const metadata = {
       "Content-type": "image/jpg",
@@ -29,14 +33,14 @@ exports.createStory = catchAsyncErrors(async (req, res, next) => {
         console.log(etag);
       }
     );
-  
+    await unlinkFile(req.file.path);
     res.status(200).json({
       success: true,
     });
   });
   
   exports.getStory = catchAsyncErrors(async (req, res, next) => {
-    const user = await User.find({},{ name: 1, picture: 1, images:1 } );
+    const user = await User.find({images : { $exists: true, $ne: [] }, picture : {$ne : null}},{ name: 1, picture: 1, images:1 } );
  
     res.status(200).json({
       success: true,

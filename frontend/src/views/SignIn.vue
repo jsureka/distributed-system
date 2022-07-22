@@ -91,7 +91,7 @@ export default {
       myForm.set("email", this.email);
       myForm.set("password", this.password);
       const headers = {
-        "Content-Type" : "application/x-www-form-urlencoded"
+        "Content-Type" : "multipart/form-data"
       }
       axios.post('http://localhost:5000/api/login', myForm,{headers}).then((res) => {
         console.log(res);

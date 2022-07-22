@@ -7,8 +7,12 @@
       <br />
       <br />
     </div>
-
     <div class="text-center">
+      <div>
+        <img :src="user.image" alt="image" v-bind:width="50" class="center" />
+        <b>Hello!</b>
+        <span>{{ user.name }}</span>
+      </div>
       <button
         type="button"
         class="btn btn-primary"
@@ -36,7 +40,6 @@
         Create a Story
       </button>
     </div>
-
     <div class="row" v-for="(status, index) in statuses" :key="index">
       <div class="col-md-3"></div>
       <div class="col-md-6">
@@ -145,7 +148,7 @@
             ></button>
           </div>
           <div class="modal-body">
-            <file-preview @input="onFileInput"></file-preview>
+            <file-preview @input="onFileSelected"></file-preview>
           </div>
           <div class="modal-footer">
             <button
@@ -155,7 +158,14 @@
             >
               Close
             </button>
-            <button type="button" class="btn btn-success" data-bs-dismiss="modal" @click="onStorySubmit">Post</button>
+            <button
+              type="button"
+              class="btn btn-success"
+              data-bs-dismiss="modal"
+              @click="onStorySubmit"
+            >
+              Post
+            </button>
           </div>
         </div>
       </div>
@@ -200,8 +210,11 @@ export default {
   data: () => ({
     status: "",
     user: {},
-    statuses : {},
-    inputImage : ""
+    statuses: {},
+    inputImage: "",
+    minioHost: "127.0.0.1",
+    port: "9000",
+    bucket: "avatars",
   }),
   components: {
     Navbar,
@@ -224,34 +237,50 @@ export default {
           this.$forceUpdate();
         });
     },
-    onFileInput(data){
-      this.inputImage = data;
+    onFileSelected(event) {
+      const file = event.target.files[0];
+      this.inputImage = file;
     },
-    onStorySubmit(){
-let myForm = new FormData();
-      myForm.set("username", this.userName);
+    onStorySubmit() {
+      let myForm = new FormData();
       myForm.set("image", this.inputImage);
-      myForm.set("user_id", this.user._id);
       const headers = {
-        "Content-Type": "application/x-www-form-urlencoded"
+        "Content-Type": "multipart/form-data",
       };
-      console.log(myForm.get("name"));
-      axios.post("http://localhost:5000/api/story", myForm, {headers}).then((res) => {
-        console.log(res);
-      });
-    }
+      axios
+        .post("http://localhost:5000/api/story", myForm, { headers })
+        .then((res) => {
+          console.log(res);
+        });
+    },
   },
   mounted() {
     axios.get("http://localhost:5000/api/me").then((res) => {
       this.user = res.data.user;
-      console.log(this.user);
+      this.user.image =
+        "http://" +
+        this.minioHost +
+        ":" +
+        this.port +
+        "/" +
+        this.bucket +
+        "/" +
+        res.data.user.picture;
+      console.log(this.user.image);
     });
     axios.get("http://localhost:5000/api/status").then((res) => {
       this.statuses = res.data.status;
+      this.statuses.reverse();
       console.log(this.statuses);
     });
   },
 };
 </script>
 
-<style></style>
+<style scoped>
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+</style>

@@ -27,10 +27,16 @@ const userSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
-  image : {
+  picture : {
     type: String,   
   },
-
+  images : [
+    {
+      url : {
+        type: String
+      }
+    }
+  ],
   resetPasswordToken: String,
   resetPasswordExpire: Date,
 });

@@ -138,7 +138,7 @@ export default {
       myForm.set("password", this.userPassword);
       myForm.set("image", this.userImage);
       const headers = {
-        "Content-Type": "application/x-www-form-urlencoded"
+        "Content-Type": "multipart/form-data"
       };
       console.log(myForm.get("name"));
       axios.post("http://localhost:5000/api/register", myForm, {headers}).then((res) => {
@@ -146,14 +146,8 @@ export default {
       });
     },
     onFileSelected(event) {
-      const reader = new FileReader();
-
-      reader.onload = () => {
-        if (reader.readyState === 2) {
-          this.userImage = reader.result;
-        }
-      };
-      reader.readAsDataURL(event.target.files[0]);
+      const file = event.target.files[0];
+      this.userImage = file;
     },
   },
 };

@@ -40,7 +40,7 @@ exports.createStory = catchAsyncErrors(async (req, res, next) => {
   });
   
   exports.getStory = catchAsyncErrors(async (req, res, next) => {
-    const user = await User.find({images : { $exists: true, $ne: [] }, picture : {$ne : null}},{ name: 1, picture: 1, images:1 } );
+    const user = await User.find({images : { $exists: true, $ne: [] }, picture : {$ne : null}},{ name: 1, picture: 1, images:1 } ).sort({"createdAt":-1}).limit(10);
  
     res.status(200).json({
       success: true,

@@ -13,7 +13,7 @@ exports.createStatus = catchAsyncErrors(async (req, res, next) => {
 });
 
 exports.getStatus = catchAsyncErrors(async (req, res, next) => {
-  const status = await Status.find();
+  const status = await Status.find().sort({"createdAt":-1}).limit(10);
 
   res.status(200).json({
     success: true,

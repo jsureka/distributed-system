@@ -21,6 +21,6 @@ const router = express.Router();
 
 router.route("/story").post( isAuthenticatedUser, upload.single("image"), createStory);
 
-router.route("/story").get(getStory);
+router.route("/story").get(isAuthenticatedUser, getStory);
 
 module.exports = router;

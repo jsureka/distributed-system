@@ -10,7 +10,7 @@ const router = express.Router();
 
 router.route("/status").post(upload.array(), createStatus);
 
-router.route("/status").get(getStatus);
+router.route("/status").get(isAuthenticatedUser, getStatus);
 
 
 module.exports = router;

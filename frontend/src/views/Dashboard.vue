@@ -234,7 +234,7 @@ export default {
         .post("http://localhost:5000/api/status", myForm, { headers })
         .then((res) => {
           console.log(res);
-          axios.get("http://localhost:5000/api /status").then((res) => {
+          axios.get("http://localhost:5000/api/status").then((res) => {
             this.statuses = res.data.status;
           });
         });

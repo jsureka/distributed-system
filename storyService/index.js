@@ -23,20 +23,10 @@ app.use(function (req, res, next) {
   next();
 });
 
-const user = require("./routes/userRoute");
-const status = require("./routes/statusRoute");
 const story = require("./routes/storyRoute");
 
 
-app.use("/api", user);
- app.use("/api", status);
  app.use("/api", story);
-
-
-
-
-
-
 app.use(express.static(path.join(__dirname, "../frontend/build")));
 app.get("*", (req, res) => {
   res.sendFile(path.resolve(__dirname, "../frontend/build/index.html"));

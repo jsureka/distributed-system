@@ -1,6 +1,6 @@
 const ErrorHander = require("../utils/errorhander");
 const catchAsyncErrors = require("../middleware/catchAsyncErrors");
-const Story = require("../models/userModel");
+const Story = require("../models/storyModel");
 const crypto = require("crypto");
 var Minio = require("minio");
 const fs = require('fs')

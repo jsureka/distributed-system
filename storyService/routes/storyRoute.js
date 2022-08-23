@@ -2,7 +2,7 @@ const express = require("express");
 const {
 createStory, getStory
 } = require("../controllers/storyController");
-//const { isAuthenticatedUser } = require("../middleware/auth");
+const { isAuthenticatedUser } = require("../middleware/auth");
 const multer = require('multer');
 const app=express();
 var storage = multer.diskStorage({
@@ -19,8 +19,8 @@ app.use('/uploads', express.static('uploads'));
 
 const router = express.Router();
 
-router.route("/story").post( upload.single("image"), createStory);
+router.route("/story").post( isAuthenticatedUser, upload.single("image"), createStory);
 
-router.route("/story").get(getStory);
+router.route("/story").get(isAuthenticatedUser, getStory);
 
 module.exports = router;

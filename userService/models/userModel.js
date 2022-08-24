@@ -30,13 +30,6 @@ const userSchema = new mongoose.Schema({
   picture : {
     type: String,   
   },
-  images : [
-    {
-      url : {
-        type: String
-      }
-    }
-  ],
   resetPasswordToken: String,
   resetPasswordExpire: Date,
 });

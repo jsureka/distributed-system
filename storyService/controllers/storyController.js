@@ -10,9 +10,8 @@ const unlinkFile = util.promisify(fs.unlink);
 
 exports.createStory = catchAsyncErrors(async (req, res, next) => {
     var story = crypto.randomUUID();
-    const user = await Story.find({user_id : req.user.id});
-    user.images.push({url : story});
-    user.save();
+    const user = await Story.create({user_id : req.user.id, images : [{url: story}]});
+    
     var minioClient = new Minio.Client({
       endPoint: "127.0.0.1",
       port: 9000,

@@ -184,7 +184,7 @@ export default {
       reset();
     };
     const fetchStories = () => {
-      axios.get("http://localhost:5000/api/story").then((res) => {
+      axios.get("http://localhost:8001/story").then((res) => {
               stories.value = res.data.user;
       });
       play();

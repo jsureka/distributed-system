@@ -141,7 +141,7 @@ export default {
         "Content-Type": "multipart/form-data"
       };
       console.log(myForm.get("name"));
-      axios.post("http://localhost:5002/api/register", myForm, {headers}).then((res) => {
+      axios.post("http://localhost:8001/register", myForm, {headers}).then((res) => {
         console.log(res);
       });
     },

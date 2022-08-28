@@ -231,10 +231,10 @@ export default {
         "Content-Type": "multipart/form-data",
       };
       axios
-        .post("http://localhost:5001/api/status", myForm, { headers })
+        .post("http://localhost:8001/status", myForm, { headers })
         .then((res) => {
           console.log(res);
-          axios.get("http://localhost:5001/api/status").then((res) => {
+          axios.get("http://localhost:8001/status").then((res) => {
             this.statuses = res.data.status;
           });
         });
@@ -250,14 +250,14 @@ export default {
         "Content-Type": "multipart/form-data",
       };
       axios
-        .post("http://localhost:5000/api/story", myForm, { headers })
+        .post("http://localhost:8001/story", myForm, { headers })
         .then((res) => {
           console.log(res);
         });
     },
   },
   mounted() {
-    axios.get("http://localhost:5002/api/me").then((res) => {
+    axios.get("http://localhost:8001/me").then((res) => {
       this.user = res.data.user;
       this.user.image =
         "http://" +
@@ -270,7 +270,7 @@ export default {
         res.data.user.picture;
       console.log(this.user.image);
     });
-    axios.get("http://localhost:5001/api/status").then((res) => {
+    axios.get("http://localhost:8001/status").then((res) => {
       this.statuses = res.data.status;
     });
   },

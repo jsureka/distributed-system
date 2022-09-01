@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
-const uri = "mongodb://localhost:27017/distributed-system";
-const dbName = 'distributed-system'
+const uri = "mongodb://localhost:27017/ds-user";
 const connectDatabase = () => {
   mongoose
     .connect(uri, {

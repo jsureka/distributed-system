@@ -107,7 +107,7 @@ export default {
   },
   methods : {
     onLogout(){
-          axios.get("http://localhost:5002/api/logout").then((res) => {
+          axios.get("http://localhost:8001/logout").then((res) => {
       console.log(res);
       this.isLoggedIn =true;
       router.push({name : "SignIn"})

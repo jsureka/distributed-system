@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const uri = "mongodb://localhost:27017/ds-story";
+const uri = "mongodb://db-story:27017/StoryDatabases";
 const dbName = 'distributed-system'
 const connectDatabase = () => {
   mongoose

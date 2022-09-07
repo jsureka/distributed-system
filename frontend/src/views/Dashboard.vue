@@ -212,7 +212,7 @@ export default {
     user: {},
     statuses: {},
     inputImage: "",
-    minioHost: "127.0.0.1",
+    minioHost: "storyobjectdb",
     port: "9000",
     bucket: "avatars",
   }),

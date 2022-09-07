@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const uri = "mongodb://localhost:27017/ds-user";
+const uri = "mongodb://db-account:27017/AccountDatabase";
 const connectDatabase = () => {
   mongoose
     .connect(uri, {

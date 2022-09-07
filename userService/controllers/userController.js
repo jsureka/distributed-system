@@ -15,7 +15,7 @@ exports.registerUser = catchAsyncErrors(async (req, res, next) => {
   const user = await User.create({ name, email, password, picture });
 
   var minioClient = new Minio.Client({
-    endPoint: "127.0.0.1",
+    endPoint: "storyobjectdb",
     port: 9000,
     useSSL: false,
     accessKey: process.env.MINIO_ACCESS_KEY,
@@ -24,6 +24,11 @@ exports.registerUser = catchAsyncErrors(async (req, res, next) => {
   const metadata = {
     "Content-type": "image/jpg",
   };
+  minioClient.makeBucket('avatars', 'us-east-1', function(err) {
+    if (err) return console.log('Error creating bucket.', err)
+    console.log('Bucket created successfully in "us-east-1".')
+  })
+  
   minioClient.fPutObject(
     "avatars",
     picture,

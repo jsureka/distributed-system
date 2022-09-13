@@ -5,6 +5,7 @@ const {
   logout,
   getUserDetails,
   getUser,
+  getImage,
 } = require("../controllers/userController");
 const multer = require('multer');
 const app=express();
@@ -34,5 +35,7 @@ router.route("/logout").get(logout);
 router.route("/user").get(getUser);
 
 router.route("/me").get(isAuthenticatedUser, getUserDetails);
+
+router.get("/avatar", isAuthenticatedUser ,getImage);
 
 module.exports = router;

@@ -1,6 +1,6 @@
 const express = require("express");
 const {
-createStory, getStory
+createStory, getStory, getImage
 } = require("../controllers/storyController");
 const { isAuthenticatedUser } = require("../middleware/auth");
 const multer = require('multer');
@@ -22,5 +22,7 @@ const router = express.Router();
 router.route("/story").post( isAuthenticatedUser, upload.single("image"), createStory);
 
 router.route("/story").get(isAuthenticatedUser, getStory);
+router.route("/story/:id").get(isAuthenticatedUser, getImage);
 
 module.exports = router;
+

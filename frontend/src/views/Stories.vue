@@ -19,11 +19,7 @@
           <div class="h-full">
             <img
               :src="
-                'http://' +
-          this.minioHost +
-          ':' +
-          this.port +
-          '/stories/' +
+                'http://localhost:8001/story/' +
           story.images[key].url
               "
               class="h-full w-full rounded-lg"
@@ -61,14 +57,14 @@
             <div class="flex w-11/12 mt-4 m-auto">
               <div class="flex justify-start items-center w-1/2">
                 <div style="width: 35px; height: 35px">
-                  <img :src="'http://' +
+                  <!-- <img :src="'http://' +
           this.minioHost +
           ':' +
           this.port +
           '/' +
           this.bucket +
           '/' +
-          story.picture" class="rounded-full" />
+          story.picture" class="rounded-full" /> -->
                 </div>
                 <div class="ml-4">
                   <p class="text-sm text-white font-semibold">

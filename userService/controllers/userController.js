@@ -18,8 +18,8 @@ exports.registerUser = catchAsyncErrors(async (req, res, next) => {
     endPoint: "storyobjectdb",
     port: 9000,
     useSSL: false,
-    accessKey: process.env.MINIO_ACCESS_KEY,
-    secretKey: process.env.MINIO_SECRET_KEY,
+    accessKey: "minioadmin",
+    secretKey: "minioadmin",
   });
   const metadata = {
     "Content-type": "image/jpg",
@@ -112,4 +112,41 @@ exports.getSpecificUserDetails = catchAsyncErrors(async (req, res, next) => {
     success: true,
     user,
   });
+});
+
+
+exports.getImage = catchAsyncErrors(async (req, res, next) => {
+  const user = await User.findById(req.user.id);
+  console.log(user.picture);
+	try {
+		let data;
+		
+    var minioClient = new Minio.Client({
+      endPoint: "storyobjectdb",
+      port: 9000,
+      useSSL: false,
+      accessKey: "minioadmin",
+      secretKey: "minioadmin",
+    });
+		minioClient.getObject("avatars", user.picture, (err, objStream) => {
+			if (err) {
+				return res.status(404).send({ message: "Image not found" });
+			}
+			objStream.on("data", (chunk) => {
+				console.log("eta error 1?");
+				data = !data ? new Buffer(chunk) : Buffer.concat([data, chunk]);
+			});
+			console.log("The user picture id is " + user.picture);
+
+			objStream.on("end", () => {
+				res.writeHead(200, { "Content-Type": "image/png" });
+				res.write(data);
+				res.end();
+			});
+		});
+	} catch (error) {
+		res.status(500).send({
+			message: "Internal Server Error at fetching image",
+		});
+	}
 });

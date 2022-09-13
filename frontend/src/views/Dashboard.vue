@@ -259,17 +259,13 @@ export default {
   mounted() {
     axios.get("http://localhost:8001/me").then((res) => {
       this.user = res.data.user;
-      this.user.image =
-        "http://" +
-        this.minioHost +
-        ":" +
-        this.port +
-        "/" +
-        this.bucket +
-        "/" +
-        res.data.user.picture;
-      console.log(this.user.image);
+      this.user.image = "http://localhost:8001/avatar"
     });
+    // axios.get("http://localhost:8001/avatar").then((res) => {
+    //   console.log(res);
+    //   this.user.image = "http://localhost:8001/avatar";
+      
+    // });
     axios.get("http://localhost:8001/status").then((res) => {
       this.statuses = res.data.status;
     });

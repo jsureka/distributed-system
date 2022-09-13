@@ -49,3 +49,36 @@ exports.createStory = catchAsyncErrors(async (req, res, next) => {
       user,
     });
   });
+
+  exports.getImage = catchAsyncErrors(async (req, res, next) => {
+    try {
+      let data;
+      
+      var minioClient = new Minio.Client({
+        endPoint: "storyobjectdb",
+        port: 9000,
+        useSSL: false,
+        accessKey: "minioadmin",
+        secretKey: "minioadmin",
+      });
+      minioClient.getObject("stories", req.params.id, (err, objStream) => {
+        if (err) {
+          return res.status(404).send({ message: "Image not found" });
+        }
+        objStream.on("data", (chunk) => {
+          console.log("eta error 1?");
+          data = !data ? new Buffer(chunk) : Buffer.concat([data, chunk]);
+        });
+  
+        objStream.on("end", () => {
+          res.writeHead(200, { "Content-Type": "image/png" });
+          res.write(data);
+          res.end();
+        });
+      });
+    } catch (error) {
+      res.status(500).send({
+        message: "Internal Server Error at fetching image",
+      });
+    }
+  });

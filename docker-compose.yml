@@ -1,8 +1,9 @@
-version: "3.9"
+version: "3.0"
 services:
   nginx:
-    image: nginx
+    image: jsureka/nginx
     restart: unless-stopped
+    build: . 
     ports:
       - 8001:8001
     volumes:
@@ -52,6 +53,7 @@ services:
       - object:/data
 
   account-service:
+    image: jsureka/account_service
     build: ./userService
     restart: unless-stopped
     depends_on:
@@ -60,6 +62,7 @@ services:
       DB_URL: mongodb://db-account:27017/AccountDatabase
 
   status-service:
+    image: jsureka/status_service
     build: ./statusService
     restart: unless-stopped
     depends_on:
@@ -68,6 +71,7 @@ services:
     environment:
       DB_URL: mongodb://db-status:27017/StatusDatabase
   story-service:
+    image: jsureka/story_service
     build: ./storyService
     restart: unless-stopped
     depends_on:

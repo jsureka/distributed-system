@@ -93,7 +93,7 @@ export default {
       const headers = {
         "Content-Type" : "multipart/form-data"
       }
-      axios.post('http://localhost:8001/login', myForm,{headers}).then((res) => {
+      axios.post('http://localhost:8001/authenticate/login', myForm,{headers}).then((res) => {
         console.log(res);
         if(res.data.success === true){
           router.push({name : 'Dashboard'});

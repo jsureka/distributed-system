@@ -257,9 +257,9 @@ export default {
     },
   },
   mounted() {
-    axios.get("http://localhost:8001/me").then((res) => {
+    axios.get("http://localhost:8001/authenticate/me").then((res) => {
       this.user = res.data.user;
-      this.user.image = "http://localhost:8001/avatar"
+      this.user.image = "http://localhost:8001/authenticate/avatar"
     });
     // axios.get("http://localhost:8001/avatar").then((res) => {
     //   console.log(res);

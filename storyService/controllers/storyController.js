@@ -16,8 +16,8 @@ exports.createStory = catchAsyncErrors(async (req, res, next) => {
       endPoint: "storyobjectdb",
       port: 9000,
       useSSL: false,
-      accessKey: process.env.MINIO_ACCESS_KEY,
-      secretKey: process.env.MINIO_SECRET_KEY,
+      accessKey: "minioadmin",
+      secretKey: "minioadmin",
     });
     const metadata = {
       "Content-type": "image/jpg",
